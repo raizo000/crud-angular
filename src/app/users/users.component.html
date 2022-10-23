@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-xs-6">
+    <ul class="list-group" *ngFor="let item of users">
+      <li class="list-group-item">
+        <app-user-item [user]="item"></app-user-item>
+      </li>
+    </ul>
+  </div>
+  <div class="col-xs-6">
+    <router-outlet></router-outlet>
+  </div>
+</div>
