@@ -26,10 +26,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('crud-app');
   });
 
-  it('should render title', () => {
+  it('should render navbar', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('crud-app app is running!');
+    expect(compiled.querySelector('.nav .navbar-nav a')?.textContent).toContain('user');
   });
 });
