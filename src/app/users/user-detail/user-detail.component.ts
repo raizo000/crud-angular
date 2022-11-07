@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { getUserDetail } from 'src/app/state/user.action';
+import { selectUserDetail } from 'src/app/state/user.selector';
 import { User } from 'src/app/user.modal';
 import { UserService } from 'src/app/user.service';
 
@@ -9,19 +12,18 @@ import { UserService } from 'src/app/user.service';
   styleUrls: ['./user-detail.component.css'],
 })
 export class UserDetailComponent implements OnInit {
-  user?: User;
   constructor(
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
+
+  user$ = this.store.select(selectUserDetail);
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
-      this.userService.getUserById(params['id']).subscribe((user) => {
-        this.user = user;
-        console.log(user);
-      });
+      this.store.dispatch(getUserDetail({ id: params['id'] }));
     });
   }
 

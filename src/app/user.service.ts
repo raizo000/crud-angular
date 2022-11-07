@@ -15,6 +15,7 @@ export class UserService {
   }
 
   getUserById(id: number): Observable<User> {
+    console.log('get user by id', id);
     return this.httpClient.get<User>(`${this.baseURL}users/${id}`);
   }
 }

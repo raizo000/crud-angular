@@ -1,15 +1,24 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
 import { User } from '../user.modal';
-import { addNewUser, retrievedUsers } from './user.action';
+import {
+  addNewUser,
+  getUserDetailSuccess,
+  retrievedUsers
+} from './user.action';
 
 export const initialState: ReadonlyArray<User> = [];
 
+export const userFeatureKey = 'userFeature';
+
 export const usersReducer = createReducer(
   initialState,
-  on(retrievedUsers, (state, { users }) => users),
+  on(retrievedUsers, (state, { users }) => {
+    return { ...state, users };
+  }),
   on(addNewUser, (state, { user }) => {
     return [...state, user];
+  }),
+  on(getUserDetailSuccess, (state, { user }) => {
+    return { ...state, userDetail: user };
   })
 );
-
-export const userFeatureKey = 'userFeature';

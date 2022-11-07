@@ -1,15 +1,16 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { User } from '../user.modal';
+import { userFeatureKey } from './user.reducer';
+import { UserState } from './user.state';
 
-export const selectUser = createFeatureSelector<ReadonlyArray<User>>('users');
+export const selectUserFeatures =
+  createFeatureSelector<UserState>(userFeatureKey);
 
-export const selectCollectionState =
-  createFeatureSelector<ReadonlyArray<string>>('collection');
+export const selectUsers = createSelector(
+  selectUserFeatures,
+  (state: UserState) => state.users
+);
 
-export const selectUserCollection = createSelector(
-  selectUser,
-  selectCollectionState,
-  (users, collection) => {
-    return collection.map((id) => users.find((user) => user.id === id));
-  }
+export const selectUserDetail = createSelector(
+  selectUserFeatures,
+  (state: UserState) => state.userDetail
 );

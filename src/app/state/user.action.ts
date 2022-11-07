@@ -15,3 +15,13 @@ export const retrievedUsers = createAction(
   '[User List] Retrieve User Success',
   props<{ users: ReadonlyArray<User> }>()
 );
+
+export const getUserDetail = createAction(
+  '[User Detail] Get User By Id',
+  props<{ id: number }>()
+);
+
+export const getUserDetailSuccess = createAction(
+  '[User Detail] Get User By Id Success',
+  props<{ user: User }>()
+);

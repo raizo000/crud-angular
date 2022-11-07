@@ -1,4 +1,4 @@
-<div class="card hovercard">
+<div class="card hovercard" *ngIf="user$ | async; let user">
   <div class="info">
     <div class="title">
       <span>{{ user?.name }}</span>

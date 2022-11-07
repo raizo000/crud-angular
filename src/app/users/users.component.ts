@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { retrievedUsers } from '../state/user.action';
-import { selectUser, selectUserCollection } from '../state/user.selector';
-import { User } from '../user.modal';
-import { UserService } from '../user.service';
+import { map, tap } from 'rxjs';
+import { selectUsers } from '../state/user.selector';
 
 @Component({
   selector: 'app-users',
@@ -12,24 +9,15 @@ import { UserService } from '../user.service';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  users: User[] = [];
-  userSubscription: Subscription = new Subscription();
+  users$ = this.store.select(selectUsers).pipe(tap(console.log));
 
-  users$ = this.store.select(selectUser);
+  constructor(private store: Store) {}
 
-  constructor(private userService: UserService, private store: Store) {}
-
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
-    this.getUsers();
+    this.store.dispatch({ type: '[Users Page] Load Movies' });
   }
 
-  getUsers() {
-    this.userSubscription = this.userService.getUsers().subscribe((users) => {
-      this.store.dispatch(retrievedUsers({ users }));
-    });
-  }
+  getUsers() {}
 }
